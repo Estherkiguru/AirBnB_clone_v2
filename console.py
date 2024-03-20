@@ -114,43 +114,41 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
+        """Create an object of any class"""
         try:
-            class_list = args.split(" ")[0]
-            if len(class_list) == 0:
-                print("** class name missing **")
-                return
-            if class_list and class_list not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-
-            kwargs = {}
-            my_list = args.split(" ")
-
-            for i in range(1, len(my_list)):
-                key, value =  tuple(my_list[i].split("="))
-                if value.startswith('"'):
-                    value = value.strip('"').replace("_", " ")
-                else:
-                    try:
-                        value = eval(value)
-                    except (SyntaxError, NameError):
-                        continue
-
-                kwargs[key] = value
-            
-            if kwargs == {}:
-                new_instance = eval(class_list)()
-            else:
-                new_instance = eval(class_list)(**kwargs)
-
-            storage.new(new_instance)
-            print(new_instance.id)
-            new_instance.save()
-
-        except ValueError:
-            print(ValueError)
+            class_name = args.split(" ")[0]
+        except IndexError:
+            print("** class name missing **")
             return
+
+        if not class_name:
+            print("** class name missing **")
+            return
+        elif class_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        my_list = args.split(" ")
+
+        new_instance = eval(class_name)()
+
+        for i in range(1, len(my_list)):
+            key, value = tuple(my_list[i].split("="))
+            if value.startswith('"'):
+                value = value.strip('"').replace("_", " ")
+            else:
+                try:
+                    value = eval(value)
+                except Exception as e:
+                    print(f"Error evaluating {value}: {e}")
+                    continue
+
+        storage.new(new_instance)
+        print(new_instance.id)
+        new_instance.save()
+
+
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
