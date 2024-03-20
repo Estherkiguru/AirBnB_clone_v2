@@ -1,8 +1,8 @@
---MySQL server for the project:
---Database named hbnb_dev_db
---Creates a user named hbnb_dev with the password hbnb_dev_pwd on localhost.
---Gives hbnb_dev with all privileges on the hbnb_dev_db database. 
---Grants hbnb_dev the SELECT privilege on the performance database.
+-- MySQL server for the project:
+-- Database named hbnb_dev_db
+-- Creates a user named hbnb_dev with the password hbnb_dev_pwd on localhost.
+-- Gives hbnb_dev with all privileges on the hbnb_dev_db database. 
+-- Grants hbnb_dev the SELECT privilege on the performance database.
 
 -- Create the database if it doesn't exist
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
