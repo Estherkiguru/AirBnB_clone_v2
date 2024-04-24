@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel
-from sqalchemy import Column, ForeignKey, String
-from sqalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, String
+from sqlalchemy.orm import relationship
 from os import getenv
 
 
@@ -16,14 +16,14 @@ class State(BaseModel):
     else:
         @property
         def cities(self):
-        """
-        Get a list of City instances with
-        state_id equals to the current State.id.
-        """
-        import models
-        from models.city import City
-        city_list = []
-        for city in models.storage.all(City).values():
-            if city.state_id == self.id:
-                city_list.append(city)
-        return city_list
+            """
+            Get a list of City instances with
+            state_id equals to the current State.id.
+            """
+            import models
+            from models.city import City
+            city_list = []
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
