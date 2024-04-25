@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy import Column, String, ForeignKey, Float, Integer
 from sqlalchemy.orm import relationship
+from models.review import Review
 import models
 
 class Place(BaseModel, Base):
@@ -24,10 +25,9 @@ class Place(BaseModel, Base):
                                  backref="place_amenities",
                                  viewonly=False)
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
-        @property
-        def reviews(self):
-            from models.review import Review
-            all_reviews = list(models.storage.all(Review).values())
-            review_list = [r for r in all_reviews if r.place_id == self.id]
-            return review_list
+if getenv('HBNB_TYPE_STORAGE') != 'db':
+    @property
+    def reviews(self):
+        all_reviews = list(models.storage.all(Review).values())
+        review_list = [r for r in all_reviews if r.place_id == self.id]
+        return review_list
